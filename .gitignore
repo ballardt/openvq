@@ -1,0 +1,15 @@
+# CMake files
+CMakeCache.txt
+CMakeFiles/*
+*/CMakeFiles/*
+CMakeScripts/*
+*/CMakeScripts/*
+cmake_install.cmake
+*/cmake_install.cmake
+Makefile
+*/Makefile
+build/*
+data/*
+
+# CLion
+.idea/*
