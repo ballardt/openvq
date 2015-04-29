@@ -31,7 +31,7 @@ OpenVQ is distributed as a CMake project. For UNIX systems, CMake can be invoked
     make
     make install
 
-The default install prefix is `/usr/local`. A different prefix can be changed when CMake is invoked to generate the build files.
+The default install prefix is `/usr/local`. To specify a different prefix, invoke CMake to re-generate the build files.
 
     cmake <path to openvq source dir> -DCMAKE_INSTALL_PREFIX=<prefix>
 
