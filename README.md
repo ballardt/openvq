@@ -11,15 +11,20 @@ Version 1 of OpenVQ contains the following metrics:
 
 ### Setup
 
+#### Using vagrant
+The easiest way of testing OpenVQ is using the supplied Vagrant configuration. By simply invoking `vagrant up` in the root of this repository, you will boot and provision a virtual machine with all the necessary dependencies. For more info about how to use Vagrant, please refer to the [documentation](https://www.vagrantup.com/docs/getting-started/).
+
+Please note, however, because of the processor intensive nature of video processing, running OpenVQ in a highly resource restrained virtual environment yields suboptimal performance.
+
 #### 1. Dependencies
 We depend on the following programs and libraries:
 
  * [CMake](http://www.cmake.org) to generate a project and/or build.
- * [Libav](https://libav.org) (v.9)
+ * [Libav](https://libav.org)/[FFmpeg](https://www.ffmpeg.com) (LibAVCodec, LibAVFormat, LibAVUtil, LibSWScale)
  * [OpenCV](http://opencv.org) (v.2)
  * [Boost](http://www.boost.org) Program Options (v.1.54 or newer)
 
-On Ubuntu, install the dependencies by running the following command: 
+On Ubuntu, install the dependencies by running the following command (tested with Ubuntu 14.04 LTS and 16.04 LTS):
 
     sudo apt-get install cmake libavcodec-dev libavutil-dev libavformat-dev libswscale-dev libopencv-dev libboost-program-options-dev
     
