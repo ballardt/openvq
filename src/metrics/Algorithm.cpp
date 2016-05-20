@@ -119,7 +119,7 @@ void FullReferenceAlgorithm::makePass(IntraFrameFunction body) {
 
     unsigned int t = 0;
     Logger::initProgress();
-    while (t <= sequenceLength) {
+    while (t < sequenceLength) {
         srcCurr = src.nextFrame();
         pvsCurr = pvs.nextFrame();
         if (!srcCurr)
@@ -142,7 +142,7 @@ void FullReferenceAlgorithm::makePassWithPrev(InterFrameFunction body) {
 
     unsigned int t = 0;
     Logger::initProgress();
-    while (t <= sequenceLength) {
+    while (t < sequenceLength) {
         srcCurr = src.nextFrame();
         pvsCurr = pvs.nextFrame();
         if (!srcCurr)
@@ -183,6 +183,7 @@ void ParallelFullReferenceAlgorithm::init(int argc, const char **argv) {
             << "Defaulting to single thread operation.";
         }
     }
+    logger(DEBUG) << "Using " << jFactor << " threads";
 }
 
 void ParallelFullReferenceAlgorithm::makePass(IntraFrameFunction body) {
@@ -203,7 +204,7 @@ void ParallelFullReferenceAlgorithm::makePass(IntraFrameFunction body) {
     std::shared_ptr<Frame> srcCurr, pvsCurr;
     unsigned int t = 0;
     Logger::initProgress();
-    while (t <= sequenceLength) {
+    while (t < sequenceLength) {
         srcCurr = src.nextFrame();
         pvsCurr = pvs.nextFrame();
         if (!srcCurr)
@@ -241,7 +242,7 @@ void ParallelFullReferenceAlgorithm::makePassWithPrev(InterFrameFunction body) {
     std::shared_ptr<Frame> srcCurr, srcPrev, pvsCurr, pvsPrev;
     unsigned int t = 0;
     Logger::initProgress();
-    while (t <= sequenceLength) {
+    while (t < sequenceLength) {
         srcCurr = src.nextFrame();
         pvsCurr = pvs.nextFrame();
         if (!srcCurr)

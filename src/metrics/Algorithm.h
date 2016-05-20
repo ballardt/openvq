@@ -143,9 +143,9 @@ protected:
 
     ParallelFullReferenceAlgorithm(std::string algorithmName);
 
-    void makePass(IntraFrameFunction body);
+    void makePass(IntraFrameFunction body) override;
 
-    void makePassWithPrev(InterFrameFunction body);
+    void makePassWithPrev(InterFrameFunction body) override;
 
 public:
     virtual void init(int argc, const char **argv) override;

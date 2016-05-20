@@ -78,7 +78,26 @@ void Decoder::loadVideo(std::string &url) {
     videoInfo.duration = static_cast<float>(formatContext->duration / AV_TIME_BASE);
     videoInfo.avg_framerate = GET_FRAME_RATE(formatContext->streams[videoStream]);
     videoInfo.filename = formatContext->filename;
-    videoInfo.frame_count = static_cast<int>(videoInfo.duration * videoInfo.avg_framerate);
+    videoInfo.frame_count = countFrames();
+}
+
+int Decoder::countFrames() {
+    int frameCount = 0;
+    bool isLastFrame = false;
+    AVPacket packet;
+    AVFrame *frame = AVFRAME_ALLOC();
+
+    for (;;) {
+        bool noError = getNextFrame(&packet, frame, &isLastFrame);
+        if (!noError || isLastFrame) {
+            break;
+        }
+        frameCount++;
+    }
+    AVFRAME_FREE(&frame);
+    rewindAndFlushDecoder();
+
+    return frameCount;
 }
 
 bool Decoder::getNextFrame(AVPacket *packet, AVFrame *frame, bool *isLastFrame) {
@@ -86,24 +105,19 @@ bool Decoder::getNextFrame(AVPacket *packet, AVFrame *frame, bool *isLastFrame) 
         return false;
 
     av_init_packet(packet);
-    packet->stream_index = videoStream + 1;
-    bool eof = false;
 
-    while (packet->stream_index != videoStream) {
-        // From the libav documentation (https://libav.org/doxygen/release/9/group__lavf__decoding.html):
-        // [..] For video, the packet contains exactly one frame. [...]
-        int ret = av_read_frame(formatContext, packet);
-        if (ret < 0) {
-            eof = true;
-            break;
-        }
-    }
-
-    int got_picture;
-    int nbytes = avcodec_decode_video2(codecContext, frame, &got_picture, packet);
-    if (!eof) {
-        if (nbytes < 0 || !got_picture) {
-            err("Error while decoding frame", nbytes);
+    int got_frame = 0;
+    bool eof = true;
+    while (!av_read_frame(formatContext, packet)) {
+        if (packet->stream_index == videoStream) {
+            int nbytes = avcodec_decode_video2(codecContext, frame, &got_frame, packet);
+            if (nbytes < 0) {
+                err("Error while decoding frame", nbytes);
+            }
+            if (got_frame) {
+                eof = false;
+                break;
+            }
         }
     }
 
@@ -116,10 +130,10 @@ void Decoder::rewindAndFlushDecoder() {
     avcodec_flush_buffers(codecContext);
 }
 
+
 void Decoder::freeBuffers() {
     avformat_close_input(&formatContext);
 }
-
 
 Logger VideoSequence::logger = Logger("VideoSequence");
 
@@ -153,7 +167,7 @@ std::shared_ptr<Frame> VideoSequence::nextFrame() {
     }
 
     SwsContext *ctxt = sws_getContext(frame->width, frame->height, (AVPixelFormat) frame->format,
-            frame->width, frame->height, pixelFormat, SWS_X, nullptr, nullptr, nullptr);
+                                      frame->width, frame->height, pixelFormat, SWS_X, nullptr, nullptr, nullptr);
 
     if (ctxt == nullptr) {
         throw std::runtime_error("Could not convert input format to desired pixel format");
@@ -187,3 +201,4 @@ void VideoSequence::rewind() {
 VideoInfo &Decoder::getVideoInfo() {
     return videoInfo;
 }
+

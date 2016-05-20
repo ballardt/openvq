@@ -62,6 +62,8 @@ private:
     void err(const char *msg, int errNum);
 
     static Logger logger;
+
+    int countFrames();
 };
 
 

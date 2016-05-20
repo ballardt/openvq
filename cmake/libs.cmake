@@ -25,10 +25,10 @@ find_package(Threads)
 #
 # libav
 #
-find_package (LibAVFormat 55.12.0 REQUIRED)
-find_package (LibAVCodec 55.34.1 REQUIRED)
-find_package (LibAVUtil 53.3.0 REQUIRED)
-find_package (LibSWScale 2.1.2 REQUIRED)
+find_package (LibAVFormat 56.36.100 REQUIRED)
+find_package (LibAVCodec 56.41.100 REQUIRED)
+find_package (LibAVUtil 54.27.100 REQUIRED)
+find_package (LibSWScale 3.1.101 REQUIRED)
 
 # All libav libraries found, add include and library directories
 include_directories (${LIBAVFORMAT_INCLUDE_DIRS})
