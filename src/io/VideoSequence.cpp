@@ -65,8 +65,8 @@ void Decoder::loadVideo(std::string &url) {
         err("video stream codec not found for file", -2);
     }
 
-    if (codec->capabilities & CODEC_CAP_TRUNCATED)
-        codecContext->flags |= CODEC_FLAG_TRUNCATED;
+    if (codec->capabilities & AV_CODEC_CAP_TRUNCATED)
+        codecContext->flags |= AV_CODEC_FLAG_TRUNCATED;
 
     ret = avcodec_open2(codecContext, codec, NULL);
     if (ret < 0) {

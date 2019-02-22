@@ -20,25 +20,25 @@
 #define __CONFIG_H
 
 extern "C" {
-#include <libavcodec/version.h>
+#include "libavcodec/version.h"
 #if LIBAVCODEC_VERSION_MAJOR < 55
-#include <libavcodec/avcodec.h>
+#include "libavcodec/avcodec.h"
 #define AVFRAME_ALLOC() avcodec_alloc_frame()
 #define AVFRAME_FREE(__fptr) avcodec_free_frame(__fptr)
 #else
-#include <libavutil/frame.h>
+#include "libavutil/frame.h"
 #define AVFRAME_ALLOC() av_frame_alloc()
 #define AVFRAME_FREE(__fptr) av_frame_free(__fptr)
 #endif
-#include <libavformat/version.h>
-#include <libavformat/avformat.h>
+#include "libavformat/version.h"
+#include "libavformat/avformat.h"
 #if LIBAVFORMAT_VERSION_MAJOR < 55
 #define GET_FRAME_RATE(__vstreamptr) (((float) (__vstreamptr)->r_frame_rate.num) / ((float) (__vstreamptr)->r_frame_rate.den))
 #else
 #define GET_FRAME_RATE(__vstreamptr) (((float) (__vstreamptr)->avg_frame_rate.num) / ((float) (__vstreamptr)->avg_frame_rate.den))
 #endif
-#include <libswscale/swscale.h>
-#include <libavutil/pixfmt.h>
+#include "libswscale/swscale.h"
+#include "libavutil/pixfmt.h"
 }
 
 #endif // __CONFIG_H

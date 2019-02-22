@@ -25,16 +25,16 @@ find_package(Threads)
 #
 # libav
 #
-find_package (LibAVFormat 56.36.100 REQUIRED)
-find_package (LibAVCodec 56.41.100 REQUIRED)
-find_package (LibAVUtil 54.27.100 REQUIRED)
-find_package (LibSWScale 3.1.101 REQUIRED)
-
-# All libav libraries found, add include and library directories
-include_directories (${LIBAVFORMAT_INCLUDE_DIRS})
-include_directories (${LIBAVCODEC_INCLUDE_DIRS})
-include_directories (${LIBAVUTIL_INCLUDE_DIRS})
-include_directories (${LIBSWSCALE_INCLUDE_DIRS})
+##find_package (LibAVFormat 56.36.100 REQUIRED)
+##find_package (LibAVCodec 56.41.100 REQUIRED)
+##find_package (LibAVUtil 54.27.100 REQUIRED)
+##find_package (LibSWScale 3.1.101 REQUIRED)
+##
+### All libav libraries found, add include and library directories
+##include_directories (${LIBAVFORMAT_INCLUDE_DIRS})
+##include_directories (${LIBAVCODEC_INCLUDE_DIRS})
+##include_directories (${LIBAVUTIL_INCLUDE_DIRS})
+##include_directories (${LIBSWSCALE_INCLUDE_DIRS})
 
 # __STDC_CONSTANT_MACROS is necessary for libav to compile as C++
 add_definitions (-D__STDC_CONSTANT_MACROS)
